@@ -12,7 +12,7 @@ public class Calculate {
 	* Вывод на экран "Hello world!"
 	* @params args - аргументы командной строки
 	*/
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		System.out.println("Hello worlds!");
 	}
 	
@@ -21,7 +21,7 @@ public class Calculate {
 	* @param name - Your name
 	* return Echo plus your name
 	*/
-	public String echo(String name){
+	public String echo(String name) {
 		return "Echo, echo, echo " + name;
 	}
 }
