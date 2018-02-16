@@ -16,8 +16,8 @@ public class Converter {
      * @param rouble - количество рублей
      * @return - количество евро
      */
-    public double roubleToEuro(int rouble) {
-        return rouble / (double) EURO_RATE;
+    public double roubleToEuro(double rouble) {
+        return rouble / EURO_RATE;
     }
 
     /**
@@ -26,8 +26,8 @@ public class Converter {
      * @param rouble - количество рублей
      * @return - количество долларов
      */
-    public double roubleToDollar(int rouble) {
-        return rouble / (double) DOLLAR_RATE;
+    public double roubleToDollar(double rouble) {
+        return rouble / DOLLAR_RATE;
     }
 
     /**
@@ -36,7 +36,7 @@ public class Converter {
      * @param euro - количество евро
      * @return - количество рублей
      */
-    public double euroToRouble(int euro) {
+    public double euroToRouble(double euro) {
         return euro * (double) EURO_RATE;
     }
 
@@ -46,7 +46,7 @@ public class Converter {
      * @param dollar - количество долларов
      * @return - количество рублей
      */
-    public double dollarToRouble(int dollar) {
+    public double dollarToRouble(double dollar) {
         return dollar * (double) DOLLAR_RATE;
     }
 }

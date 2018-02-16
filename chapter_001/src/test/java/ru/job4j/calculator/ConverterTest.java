@@ -25,4 +25,20 @@ public class ConverterTest {
         double expected = 1D;
         assertThat(result, is(expected));
     }
+
+    @Test
+    public void when35WithHalfEuroToRoubleThen2485() {
+        Converter converter = new Converter();
+        double result = converter.euroToRouble(35.5);
+        double expected = 2485;
+        assertThat(result, is(expected));
+    }
+
+    @Test
+    public void when7DollarsToRoubleThen420() {
+        Converter converter = new Converter();
+        double result = converter.dollarToRouble(7);
+        double expected = 420;
+        assertThat(result, is(expected));
+    }
 }
