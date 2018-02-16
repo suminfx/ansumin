@@ -37,7 +37,7 @@ public class Converter {
      * @return - количество рублей
      */
     public double euroToRouble(double euro) {
-        return euro * (double) EURO_RATE;
+        return euro * EURO_RATE;
     }
 
     /**
@@ -47,6 +47,6 @@ public class Converter {
      * @return - количество рублей
      */
     public double dollarToRouble(double dollar) {
-        return dollar * (double) DOLLAR_RATE;
+        return dollar * DOLLAR_RATE;
     }
 }
