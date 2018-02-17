@@ -1,6 +1,7 @@
 package ru.job4j.max;
 
 import org.junit.Test;
+
 import static org.junit.Assert.assertArrayEquals;
 
 /**
@@ -18,6 +19,18 @@ public class MaxTest {
         int result2 = max.max(-15, 3);
         int expected2 = 3;
         int result3 = max.max(4, 100);
+        int expected3 = 100;
+        assertArrayEquals(new int[]{expected1, expected2, expected3}, new int[]{result1, result2, result3});
+    }
+
+    @Test
+    public void testMaxWithThreeParams() {
+        Max max = new Max();
+        int result1 = max.max(1, 10, 14);
+        int expected1 = 14;
+        int result2 = max.max(-15, 3, 27);
+        int expected2 = 27;
+        int result3 = max.max(4, 100, -23);
         int expected3 = 100;
         assertArrayEquals(new int[]{expected1, expected2, expected3}, new int[]{result1, result2, result3});
     }

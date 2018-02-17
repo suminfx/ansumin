@@ -8,14 +8,25 @@ package ru.job4j.max;
  */
 public class Max {
     /**
-     * Метод возвращает максимальное из двух чисел
+     * Метод возвращает максимальное из двух чисел.
      *
      * @param first  - первый аргумент
      * @param second - второй аргумент
      * @return - max
      */
     public int max(int first, int second) {
-        int result = first > second ? first : second;
-        return result;
+        return first > second ? first : second;
+    }
+
+    /**
+     * Метод возвращает максимальное из трех чисел.
+     *
+     * @param first  - первый аргумент
+     * @param second - второй аргумент
+     * @param third  - третий аргумент
+     * @return max
+     */
+    public int max(int first, int second, int third) {
+        return max(max(first, second), third);
     }
 }
