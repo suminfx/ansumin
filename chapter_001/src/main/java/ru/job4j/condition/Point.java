@@ -24,4 +24,15 @@ public class Point {
     public double distanceTo(Point destPoint) {
         return Math.sqrt(Math.pow(destPoint.x - this.x, 2) + Math.pow(destPoint.y - this.y, 2));
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Point next = (Point) obj;
+        return this.x == next.x && this.y == next.y;
+    }
 }
