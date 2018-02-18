@@ -8,7 +8,8 @@ package ru.job4j.array;
  */
 public class Matrix {
     int[][] multiple(int size) {
-        int[][] table = new int[size + 1][size + 1];
+        int newSize = size + 1;
+        int[][] table = new int[newSize][newSize];
         for (int i = 0; i <= size; i++) {
             for (int j = 0; j <= size; j++) {
                 if (i == 0) {
