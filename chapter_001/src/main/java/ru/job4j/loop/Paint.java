@@ -2,10 +2,17 @@ package ru.job4j.loop;
 
 /**
  * Класс для рисования пирамиды
+ *
  * @author Andrey Sumin
  * @since 17.02.2018
  */
 public class Paint {
+    /**
+     * Метод рисует пирамиду заданной высоты
+     *
+     * @param height - высота пирамиды
+     * @return - пирамида в виде строки
+     */
     public String paint(int height) {
         StringBuilder screen = new StringBuilder();
         String line = System.lineSeparator();
