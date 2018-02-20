@@ -8,17 +8,10 @@ package ru.job4j.array;
  */
 public class Matrix {
     int[][] multiple(int size) {
-        int newSize = size + 1;
-        int[][] table = new int[newSize][newSize];
-        for (int i = 0; i <= size; i++) {
-            for (int j = 0; j <= size; j++) {
-                if (i == 0) {
-                    table[i][j] = (i + 1) * j;
-                } else if (j == 0) {
-                    table[i][j] = i * (j + 1);
-                } else {
-                    table[i][j] = i * j;
-                }
+        int[][] table = new int[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                table[i][j] = (i + 1) * (j + 1);
             }
         }
         return table;
