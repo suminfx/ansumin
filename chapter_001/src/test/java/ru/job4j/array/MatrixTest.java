@@ -13,8 +13,8 @@ import static org.junit.Assert.*;
 public class MatrixTest {
     @Test
     public void testMatrixSizeNine() {
-        Matrix matrix = new Matrix();
-        int[][] result = matrix.multiple(9);
+        Matrix table = new Matrix();
+        int[][] result = table.multiple(9);
         int[][] excpected = new int[][]{
                 {1, 2, 3, 4, 5, 6, 7, 8, 9},
                 {2, 4, 6, 8, 10, 12, 14, 16, 18},
@@ -31,8 +31,8 @@ public class MatrixTest {
 
     @Test
     public void testMatrixSizeFive() {
-        Matrix matrix = new Matrix();
-        int[][] result = matrix.multiple(5);
+        Matrix table = new Matrix();
+        int[][] result = table.multiple(5);
         int[][] excpected = new int[][]{
                 {1, 2, 3, 4, 5},
                 {2, 4, 6, 8, 10},

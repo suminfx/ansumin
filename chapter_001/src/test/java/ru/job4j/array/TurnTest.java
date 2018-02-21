@@ -13,18 +13,18 @@ import static org.junit.Assert.*;
 public class TurnTest {
     @Test
     public void testEvenArray() {
-        Turn turn = new Turn();
+        Turn turner = new Turn();
         int[] result = new int[]{1, 5, 6, 9, 8, 13};
-        turn.back(result);
+        turner.back(result);
         int[] expected = new int[]{13, 8, 9, 6, 5, 1};
         assertArrayEquals(expected, result);
     }
 
     @Test
     public void testOddArray() {
-        Turn turn = new Turn();
+        Turn turner = new Turn();
         int[] result = new int[]{1, 5, 6, 9, 8, 13, 9, 11, 6};
-        turn.back(result);
+        turner.back(result);
         int[] expected = new int[]{6, 11, 9, 13, 8, 9, 6, 5, 1};
         assertArrayEquals(expected, result);
     }

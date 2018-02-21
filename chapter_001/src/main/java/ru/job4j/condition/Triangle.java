@@ -39,7 +39,6 @@ public class Triangle {
      */
     public double area() {
         double result = -1;
-
         if (exist) {
             double ab = this.a.distanceTo(this.b);
             double ac = this.a.distanceTo(this.c);
@@ -47,7 +46,6 @@ public class Triangle {
             double p = period(ab, ac, bc);
             result = Math.sqrt(p * (p - ab) * (p - ac) * (p - bc));
         }
-
         return result;
     }
 }

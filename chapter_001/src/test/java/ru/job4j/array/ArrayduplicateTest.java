@@ -13,9 +13,9 @@ import static org.junit.Assert.*;
 public class ArrayduplicateTest {
     @Test
     public void testRemoveDuplicate() {
-        ArrayDuplicate duplicate = new ArrayDuplicate();
+        ArrayDuplicate converter = new ArrayDuplicate();
         String[] result = new String[]{"Страна", "Привет", "Страна", "Мир", "Привет", "Супер", "Мир"};
-        result = duplicate.remove(result);
+        result = converter.remove(result);
         String[] expected = new String[]{"Страна", "Привет", "Мир", "Супер"};
         assertArrayEquals(expected, result);
     }

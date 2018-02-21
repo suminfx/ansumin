@@ -15,8 +15,8 @@ public class PaintTest {
     @Test
     public void testPaintWithHeightFive() {
         String line = System.lineSeparator();
-        Paint paint = new Paint();
-        String result = paint.paint(5);
+        Paint screen = new Paint();
+        String result = screen.paint(5);
         String expected = ""
                         + "    ^    " + line
                         + "   ^^^   " + line
@@ -29,8 +29,8 @@ public class PaintTest {
     @Test
     public void testPaintWithHeightEight() {
         String line = System.lineSeparator();
-        Paint paint = new Paint();
-        String result = paint.paint(8);
+        Paint screen = new Paint();
+        String result = screen.paint(8);
         String expected = ""
                         + "       ^       " + line
                         + "      ^^^      " + line

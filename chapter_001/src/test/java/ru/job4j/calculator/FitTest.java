@@ -11,16 +11,16 @@ import static org.junit.Assert.assertThat;
 public class FitTest {
     @Test
     public void manWeight() {
-        Fit fit = new Fit();
-        double result = fit.manWeight(180);
+        Fit analyzer = new Fit();
+        double result = analyzer.manWeight(180);
         double expected = 92;
         assertThat(result, is(expected));
     }
 
     @Test
     public void womanWeight() {
-        Fit fit = new Fit();
-        double result = fit.womanWeight(170);
+        Fit analizer = new Fit();
+        double result = analizer.womanWeight(170);
         double expected = 69;
         assertThat(result, is(expected));
     }
