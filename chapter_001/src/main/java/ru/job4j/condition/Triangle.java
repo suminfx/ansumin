@@ -10,11 +10,13 @@ public class Triangle {
     private Point a;
     private Point b;
     private Point c;
+    private boolean exist;
 
     public Triangle(Point a, Point b, Point c) {
         this.a = a;
         this.b = b;
         this.c = c;
+        exist = !(a.equals(b) || a.equals(c) || b.equals(c));
     }
 
     /**
@@ -30,17 +32,6 @@ public class Triangle {
     }
 
     /**
-     * Проверка на существование треугольника (любая из сторон должна быть меньше суммы двух других)
-     * @param ab - сторона ab
-     * @param ac - сторона ac
-     * @param bc - сторона bc
-     * @return - Существует ли треугольник?
-     */
-    private boolean exist(double ab, double ac, double bc) {
-        return (ab < (ac + bc)) && (ac < (ab + bc)) && (bc < (ab + ac));
-    }
-
-    /**
      * Рассчет площади треугольника.
      * Если треугольника не существует возвращает -1
      *
@@ -48,13 +39,15 @@ public class Triangle {
      */
     public double area() {
         double result = -1;
-        double ab = this.a.distanceTo(this.b);
-        double ac = this.a.distanceTo(this.c);
-        double bc = this.b.distanceTo(this.c);
-        double p = period(ab, ac, bc);
-        if (this.exist(ab, ac, bc)) {
+
+        if (exist) {
+            double ab = this.a.distanceTo(this.b);
+            double ac = this.a.distanceTo(this.c);
+            double bc = this.b.distanceTo(this.c);
+            double p = period(ab, ac, bc);
             result = Math.sqrt(p * (p - ab) * (p - ac) * (p - bc));
         }
+
         return result;
     }
 }
