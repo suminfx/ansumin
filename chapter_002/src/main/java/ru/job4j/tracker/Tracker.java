@@ -44,13 +44,19 @@ public class Tracker {
      *
      * @param id   - id
      * @param item - новая заявка.
+     * @return Успешность редактирования заявки.
      */
-    public void replace(String id, Item item) {
+    public boolean replace(String id, Item item) {
+        boolean result = false;
         for (int i = 0; i < this.index; i++) {
             if (this.items[i].getId().equals(id)) {
+                item.setId(this.items[i].getId());
                 this.items[i] = item;
+                result = true;
+                break;
             }
         }
+        return result;
     }
 
     /**
@@ -59,24 +65,27 @@ public class Tracker {
      * @return - id
      */
     private String generateId() {
-        return random.nextLong() + System.currentTimeMillis() + "";
+        return Math.abs(random.nextLong() + System.currentTimeMillis()) + "";
     }
 
     /**
      * Удаляет заявку по ее id
      *
      * @param id - id
+     * @return Успешность удаления элемента
      */
-    public void delete(String id) {
-        for (int i = 0; i < this.items.length; i++) {
+    public boolean delete(String id) {
+        boolean result = false;
+        for (int i = 0; i < this.index; i++) {
             if (this.items[i].getId().equals(id)) {
-                Item[] temp = new Item[this.index - 1];
-                System.arraycopy(this.items, 0, temp, 0, i);
-                System.arraycopy(this.items, i + 1, temp, i, temp.length - i);
-                this.items = Arrays.copyOf(temp, temp.length);
+                System.arraycopy(this.items, i + 1, this.items, i, this.index - i - 1);
+                this.items[this.index - 1] = null;
                 this.index--;
+                result = true;
+                break;
             }
         }
+        return result;
     }
 
     /**
