@@ -22,9 +22,10 @@ public class ShapeTest {
     public void testSquareDraw() {
         Square square = new Square();
         StringBuilder expected = new StringBuilder();
-        expected.append("*****\n");
-        expected.append("*   *\n");
-        expected.append("*   *\n");
+        String line = System.lineSeparator();
+        expected.append("*****" + line);
+        expected.append("*   *" + line);
+        expected.append("*   *" + line);
         expected.append("*****");
         assertThat(square.draw(), is(expected.toString()));
     }
@@ -33,41 +34,42 @@ public class ShapeTest {
     public void testTriangleDraw() {
         Triangle triangle = new Triangle();
         StringBuilder expected = new StringBuilder();
-        expected.append("   *   \n");
-        expected.append("  ***  \n");
-        expected.append(" ***** \n");
+        String line = System.lineSeparator();
+        expected.append("   *   " + line);
+        expected.append("  ***  " + line);
+        expected.append(" ***** " + line);
         expected.append("*******");
         assertThat(triangle.draw(), is(expected.toString()));
     }
 
     @Test
     public void testPaintSquare() {
+        String line = System.lineSeparator();
         PrintStream stdOut = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         new Paint().draw(new Square());
         StringBuilder expected = new StringBuilder();
-        expected.append("*****\n");
-        expected.append("*   *\n");
-        expected.append("*   *\n");
-        expected.append("*****");
-        expected.append(System.lineSeparator());
+        expected.append("*****" + line);
+        expected.append("*   *" + line);
+        expected.append("*   *" + line);
+        expected.append("*****" + line);
         assertThat(out.toString(), is(expected.toString()));
         System.setOut(stdOut);
     }
 
     @Test
     public void testPaintTriangle() {
+        String line = System.lineSeparator();
         PrintStream stdOut = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         new Paint().draw(new Triangle());
         StringBuilder expected = new StringBuilder();
-        expected.append("   *   \n");
-        expected.append("  ***  \n");
-        expected.append(" ***** \n");
-        expected.append("*******");
-        expected.append(System.lineSeparator());
+        expected.append("   *   " + line);
+        expected.append("  ***  " + line);
+        expected.append(" ***** " + line);
+        expected.append("*******" + line);
         assertThat(out.toString(), is(expected.toString()));
         System.setOut(stdOut);
     }
