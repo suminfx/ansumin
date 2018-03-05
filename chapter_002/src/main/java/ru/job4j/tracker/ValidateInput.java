@@ -7,19 +7,30 @@ package ru.job4j.tracker;
  * @author Andrey Sumin
  * @since 05.03.2018
  */
-public class ValidateInput extends ConsoleInput {
+public class ValidateInput implements Input {
+    private final Input input;
+
+    public ValidateInput(Input input) {
+        this.input = input;
+    }
+
     @Override
-    public int ask(String question, int[] range) throws MenuOutException {
-        int result = super.ask(question, range);
+    public String ask(String question) {
+        return this.input.ask(question);
+    }
+
+    @Override
+    public int ask(String question, int[] range) {
         boolean valid = false;
+        int result = -1;
         while (!valid) {
-            for (int i : range) {
-                if (i == result) {
-                    valid = true;
-                }
-            }
-            if (!valid) {
-                throw new MenuOutException("Please enter one of menu's items.");
+            try {
+                result = input.ask(question, range);
+                valid = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Введите корректное значение.");
+            } catch (MenuOutException e1) {
+                System.out.println(e1.getMessage());
             }
         }
         return result;

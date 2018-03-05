@@ -21,11 +21,15 @@ public class StubInput implements Input {
 
     @Override
     public int ask(String question, int[] range) {
-        int result = -1;
-        try {
-            result = Integer.parseInt(ask(question));
-        } catch (NumberFormatException e) {
-            System.out.println("Please enter correct input.");
+        int result = Integer.parseInt(this.ask(question));
+        boolean valid = false;
+        for (int i : range) {
+            if (result == i) {
+                valid = true;
+            }
+        }
+        if (!valid) {
+            throw new MenuOutException("Выберите один из пунктов меню.");
         }
         return result;
     }

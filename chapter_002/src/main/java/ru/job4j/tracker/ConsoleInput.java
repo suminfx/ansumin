@@ -2,6 +2,11 @@ package ru.job4j.tracker;
 
 import java.util.Scanner;
 
+/**
+ * Консольный ввод пользователем.
+ * @author Andrey Sumin
+ * @since 05.03.2018
+ */
 public class ConsoleInput implements Input {
     private final Scanner in = new Scanner(System.in);
 
@@ -12,16 +17,16 @@ public class ConsoleInput implements Input {
     }
 
     @Override
-    public int ask(String question, int[] range) {
-        int result = -1;
+    public int ask(String question, int[] range) throws MenuOutException {
+        int result = Integer.parseInt(this.ask(question));
         boolean valid = false;
-        while (!valid) {
-            try {
-                result = Integer.parseInt(ask(question));
+        for (int i : range) {
+            if (result == i) {
                 valid = true;
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter correct input.");
             }
+        }
+        if (!valid) {
+            throw new MenuOutException("Выберите один из пунктов меню.");
         }
         return result;
     }

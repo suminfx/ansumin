@@ -167,10 +167,20 @@ public class StartUITest {
     @Test
     public void testConsoleOutputWhenSelectedIncorrectItemMenu() {
         StubInput incorrect = new StubInput("a", "6");
-        StartUI startUI = new StartUI(incorrect, tracker);
+        StartUI startUI = new StartUI(new ValidateInput(incorrect), tracker);
         startUI.init();
         String[] result = out.toString().split(System.lineSeparator());
-        String expected = "Please enter correct input.";
-        assertThat(result[result.length - this.menuLength], is(expected));
+        String expected = "Введите корректное значение.";
+        assertThat(result[result.length - 1], is(expected));
+    }
+
+    @Test
+    public void testConsoleOutputWhenSelectedOutOfRangeItemOfMenu() {
+        StubInput incorrect = new StubInput("8", "6");
+        StartUI startUI = new StartUI(new ValidateInput(incorrect), tracker);
+        startUI.init();
+        String[] result = out.toString().split(System.lineSeparator());
+        String expected = "Выберите один из пунктов меню.";
+        assertThat(result[result.length - 1], is(expected));
     }
 }
