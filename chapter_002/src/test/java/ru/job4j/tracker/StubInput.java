@@ -18,4 +18,15 @@ public class StubInput implements Input {
     public String ask(String question) {
         return this.value[this.position++];
     }
+
+    @Override
+    public int ask(String question, int[] range) {
+        int result = -1;
+        try {
+            result = Integer.parseInt(ask(question));
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter correct input.");
+        }
+        return result;
+    }
 }

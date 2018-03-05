@@ -10,4 +10,19 @@ public class ConsoleInput implements Input {
         System.out.println(question);
         return in.nextLine();
     }
+
+    @Override
+    public int ask(String question, int[] range) {
+        int result = -1;
+        boolean valid = false;
+        while (!valid) {
+            try {
+                result = Integer.parseInt(ask(question));
+                valid = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter correct input.");
+            }
+        }
+        return result;
+    }
 }

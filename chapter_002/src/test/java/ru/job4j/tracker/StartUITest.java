@@ -163,4 +163,14 @@ public class StartUITest {
         String expected = "id: " + tracker.findAll()[0].getId() + " name: name1 desc: desc1";
         assertThat(result[result.length - this.menuLength], is(expected));
     }
+
+    @Test
+    public void testConsoleOutputWhenSelectedIncorrectItemMenu() {
+        StubInput incorrect = new StubInput("a", "6");
+        StartUI startUI = new StartUI(incorrect, tracker);
+        startUI.init();
+        String[] result = out.toString().split(System.lineSeparator());
+        String expected = "Please enter correct input.";
+        assertThat(result[result.length - this.menuLength], is(expected));
+    }
 }

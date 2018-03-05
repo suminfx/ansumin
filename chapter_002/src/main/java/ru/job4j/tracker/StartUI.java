@@ -11,6 +11,7 @@ package ru.job4j.tracker;
 public class StartUI {
     private final Input input;
     private final Tracker tracker;
+    private int[] range;
 
     public StartUI(Input input, Tracker tracker) {
         this.input = input;
@@ -22,14 +23,18 @@ public class StartUI {
      */
     public void init() {
         MenuTracker menu = new MenuTracker(this.tracker, this.input);
+        menu.fillActions();
+        this.range = new int[menu.actions.length];
+        for (int i = 0; i < range.length; i++) {
+            range[i] = menu.actions[i].key();
+        }
         while (!menu.isStop()) {
-            menu.fillActions();
             menu.show();
             try {
-                int result = Integer.parseInt(input.ask("Выберите пункт меню:"));
+                int result = input.ask("Выберите пункт меню:", range);
                 menu.select(result);
-            } catch (Exception e) {
-                System.out.println("Пункт меню введен неверно");
+            } catch (MenuOutException e) {
+                System.out.println("Выберите один из пунктов меню.");
             }
             System.out.println();
         }
@@ -41,6 +46,6 @@ public class StartUI {
      * @param args - аргументы командной строки.
      */
     public static void main(String[] args) {
-        new StartUI(new ConsoleInput(), new Tracker()).init();
+        new StartUI(new ValidateInput(), new Tracker()).init();
     }
 }
