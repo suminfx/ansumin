@@ -10,6 +10,7 @@ public class MenuTracker {
     private Tracker tracker;
     private Input input;
     private boolean stop = false;
+    private int position = 0;
 
     public MenuTracker(Tracker tracker, Input input) {
         this.tracker = tracker;
@@ -22,13 +23,13 @@ public class MenuTracker {
      * Заполняем массив действий пунктов меню.
      */
     public void fillActions() {
-        this.actions[0] = new AddItem();
-        this.actions[1] = new ShowAllItems();
-        this.actions[2] = new EditItems();
-        this.actions[3] = new DeleteItem();
-        this.actions[4] = new FindById();
-        this.actions[5] = new FindByName();
-        this.actions[6] = new Exit();
+        this.actions[position++] = new AddItem(0, "Add new item");
+        this.actions[position++] = new ShowAllItems(1, "Show all items");
+        this.actions[position++] = new EditItems(2, "Edit item");
+        this.actions[position++] = new DeleteItem(3, "Delete item");
+        this.actions[position++] = new FindById(4, "Find item by id");
+        this.actions[position++] = new FindByName(5, "Find item by name");
+        this.actions[position++] = new Exit(6, "Exit");
     }
 
     /**
@@ -71,10 +72,9 @@ public class MenuTracker {
      * @author Andrey Sumin
      * @since 05.03.2018
      */
-    private class AddItem implements UserAction {
-        @Override
-        public int key() {
-            return 0;
+    private class AddItem extends BaseAction {
+        public AddItem(int key, String name) {
+            super(key, name);
         }
 
         @Override
@@ -83,11 +83,6 @@ public class MenuTracker {
             String desc = input.ask("Введите описание:");
             tracker.add(new Item(name, desc));
             System.out.println("Заявка добавлена успешно!");
-        }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Add new item");
         }
     }
 
@@ -98,10 +93,9 @@ public class MenuTracker {
      * @author Andrey Sumin
      * @since 05.03.2018
      */
-    private class ShowAllItems implements UserAction {
-        @Override
-        public int key() {
-            return 1;
+    private class ShowAllItems extends BaseAction {
+        public ShowAllItems(int key, String name) {
+            super(key, name);
         }
 
         @Override
@@ -112,11 +106,6 @@ public class MenuTracker {
                 System.out.println("id: " + item.getId() + "\tname: " + item.getName() + "\tdesc: " + item.getDescription());
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Show all items");
-        }
     }
 
     /**
@@ -126,10 +115,9 @@ public class MenuTracker {
      * @author Andrey Sumin
      * @since 05.03.2018
      */
-    private class EditItems implements UserAction {
-        @Override
-        public int key() {
-            return 2;
+    private class EditItems extends BaseAction {
+        public EditItems(int key, String name) {
+            super(key, name);
         }
 
         @Override
@@ -144,11 +132,6 @@ public class MenuTracker {
                 System.out.println("Заявка с таким id не найдена");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Edit item");
-        }
     }
 
     /**
@@ -158,10 +141,9 @@ public class MenuTracker {
      * @author Andrey Sumin
      * @since 05.03.2018
      */
-    private class DeleteItem implements UserAction {
-        @Override
-        public int key() {
-            return 3;
+    private class DeleteItem extends BaseAction {
+        public DeleteItem(int key, String name) {
+            super(key, name);
         }
 
         @Override
@@ -174,11 +156,6 @@ public class MenuTracker {
                 System.out.println("Заявка с таким id не найдена");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Delete item");
-        }
     }
 
     /**
@@ -188,10 +165,9 @@ public class MenuTracker {
      * @author Andrey Sumin
      * @since 05.03.2018
      */
-    private class FindById implements UserAction {
-        @Override
-        public int key() {
-            return 4;
+    private class FindById extends BaseAction {
+        public FindById(int key, String name) {
+            super(key, name);
         }
 
         @Override
@@ -204,11 +180,6 @@ public class MenuTracker {
                 System.out.println("Заявка с таким id не найдена");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Find item by id");
-        }
     }
 
     /**
@@ -218,10 +189,9 @@ public class MenuTracker {
      * @author Andrey Sumin
      * @since 05.03.2018
      */
-    private class FindByName implements UserAction {
-        @Override
-        public int key() {
-            return 5;
+    private class FindByName extends BaseAction {
+        public FindByName(int key, String name) {
+            super(key, name);
         }
 
         @Override
@@ -236,11 +206,6 @@ public class MenuTracker {
                 System.out.println("Заявок с таким именем не найдено");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Find item by name");
-        }
     }
 
     /**
@@ -250,20 +215,14 @@ public class MenuTracker {
      * @author Andrey Sumin
      * @since 05.03.2018
      */
-    private class Exit implements UserAction {
-        @Override
-        public int key() {
-            return 6;
+    private class Exit extends BaseAction {
+        public Exit(int key, String name) {
+            super(key, name);
         }
 
         @Override
         public void execute(Input input, Tracker tracker) {
             stop = true;
-        }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Exit");
         }
     }
 }
