@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -17,7 +18,7 @@ public class ConsoleInput implements Input {
     }
 
     @Override
-    public int ask(String question, int[] range) throws MenuOutException {
+    public int ask(String question, List<Integer> range) throws MenuOutException {
         int result = Integer.parseInt(this.ask(question));
         boolean valid = false;
         for (int i : range) {

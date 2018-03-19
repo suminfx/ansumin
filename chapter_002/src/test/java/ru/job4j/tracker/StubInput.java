@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 /**
  * Класс для иммитации ввода значений пользователем
  *
@@ -20,7 +22,7 @@ public class StubInput implements Input {
     }
 
     @Override
-    public int ask(String question, int[] range) {
+    public int ask(String question, List<Integer> range) {
         int result = Integer.parseInt(this.ask(question));
         boolean valid = false;
         for (int i : range) {

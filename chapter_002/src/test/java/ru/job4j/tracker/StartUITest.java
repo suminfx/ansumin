@@ -42,23 +42,23 @@ public class StartUITest {
 
     @Test
     public void testAddItem() {
-        int result = tracker.findAll().length;
+        int result = tracker.findAll().size();
         int expected = 1;
         assertThat(result, is(expected));
     }
 
     @Test
     public void testEditItem() {
-        StubInput edit = new StubInput("2", tracker.findAll()[0].getId(), "newName", "newDesc", "6");
+        StubInput edit = new StubInput("2", tracker.findAll().get(0).getId(), "newName", "newDesc", "6");
         StartUI editUI = new StartUI(edit, tracker);
         editUI.init();
-        int result = tracker.findAll().length;
+        int result = tracker.findAll().size();
         int expected = 1;
         assertThat(result, is(expected));
-        int result2 = tracker.findByName("newName").length;
+        int result2 = tracker.findByName("newName").size();
         int expected2 = 1;
         assertThat(result2, is(expected2));
-        int result3 = tracker.findByName("name").length;
+        int result3 = tracker.findByName("name").size();
         int expected3 = 0;
         assertThat(result3, is(expected3));
     }
@@ -68,19 +68,19 @@ public class StartUITest {
         StubInput add = new StubInput("0", "name2", "desc2", "0", "name3", "desc3", "6");
         StartUI startUI = new StartUI(add, tracker);
         startUI.init();
-        int result = tracker.findAll().length;
+        int result = tracker.findAll().size();
         int expected = 3;
         assertThat(result, is(expected));
-        int result1 = tracker.findByName("name3").length;
+        int result1 = tracker.findByName("name3").size();
         int expected1 = 1;
         assertThat(result1, is(expected1));
-        StubInput delete = new StubInput("3", tracker.findAll()[2].getId(), "6");
+        StubInput delete = new StubInput("3", tracker.findAll().get(2).getId(), "6");
         StartUI deleteUI = new StartUI(delete, tracker);
         deleteUI.init();
-        int result2 = tracker.findAll().length;
+        int result2 = tracker.findAll().size();
         int expected2 = 2;
         assertThat(result2, is(expected2));
-        int result3 = tracker.findByName("name3").length;
+        int result3 = tracker.findByName("name3").size();
         int expected3 = 0;
         assertThat(result3, is(expected3));
     }
@@ -90,7 +90,7 @@ public class StartUITest {
         StubInput add = new StubInput("0", "name2", "desc2", "0", "name3", "desc3", "6");
         StartUI startUI = new StartUI(add, tracker);
         startUI.init();
-        String resultId = tracker.findByName("name1")[0].getId();
+        String resultId = tracker.findByName("name1").get(0).getId();
         Item resultItem = tracker.findById(resultId);
         String resultDesc = resultItem.getDescription();
         String expectedDesc = "desc1";
@@ -120,13 +120,13 @@ public class StartUITest {
         StartUI startUI = new StartUI(showAll, tracker);
         startUI.init();
         String[] result = out.toString().split(System.lineSeparator());
-        String expected = "id: " + tracker.findAll()[0].getId() + "\tname: name1\tdesc: desc1";
+        String expected = "id: " + tracker.findAll().get(0).getId() + "\tname: name1\tdesc: desc1";
         assertThat(result[result.length - this.menuLength], is(expected));
     }
 
     @Test
     public void testConsoleOutputWhenSelectedEdit() {
-        StubInput showAll = new StubInput("2", tracker.findAll()[0].getId(), "newName", "newDesc", "6");
+        StubInput showAll = new StubInput("2", tracker.findAll().get(0).getId(), "newName", "newDesc", "6");
         StartUI startUI = new StartUI(showAll, tracker);
         startUI.init();
         String[] result = out.toString().split(System.lineSeparator());
@@ -136,7 +136,7 @@ public class StartUITest {
 
     @Test
     public void testConsoleOutputWhenSelectedDelete() {
-        StubInput delete = new StubInput("3", tracker.findAll()[0].getId(), "6");
+        StubInput delete = new StubInput("3", tracker.findAll().get(0).getId(), "6");
         StartUI startUI = new StartUI(delete, tracker);
         startUI.init();
         String[] result = out.toString().split(System.lineSeparator());
@@ -146,7 +146,7 @@ public class StartUITest {
 
     @Test
     public void testConsoleOutputWhenSelectedFindById() {
-        StubInput findById = new StubInput("4", tracker.findAll()[0].getId(), "6");
+        StubInput findById = new StubInput("4", tracker.findAll().get(0).getId(), "6");
         StartUI startUI = new StartUI(findById, tracker);
         startUI.init();
         String[] result = out.toString().split(System.lineSeparator());
@@ -160,7 +160,7 @@ public class StartUITest {
         StartUI startUI = new StartUI(findByName, tracker);
         startUI.init();
         String[] result = out.toString().split(System.lineSeparator());
-        String expected = "id: " + tracker.findAll()[0].getId() + " name: name1 desc: desc1";
+        String expected = "id: " + tracker.findAll().get(0).getId() + " name: name1 desc: desc1";
         assertThat(result[result.length - this.menuLength], is(expected));
     }
 

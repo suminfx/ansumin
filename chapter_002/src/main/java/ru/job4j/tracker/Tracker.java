@@ -31,13 +31,11 @@ public class Tracker {
      * Перегрузка добавления заявки массивом.
      *
      * @param items - заявки
-     * @return - массив добавленных заявок.
      */
-    public Item[] add(Item... items) {
+    public void add(Item... items) {
         for (Item item : items) {
             this.add(item);
         }
-        return items;
     }
 
     /**
@@ -92,11 +90,9 @@ public class Tracker {
      *
      * @return массив заявок.
      */
-    public Item[] findAll() {
-        Item[] result = new Item[items.size()];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = items.get(i);
-        }
+    public List<Item> findAll() {
+        List<Item> result = new ArrayList<>();
+        result.addAll(this.items);
         return result;
     }
 
@@ -106,15 +102,14 @@ public class Tracker {
      * @param key - имя заявки.
      * @return - Массив заявок.
      */
-    public Item[] findByName(String key) {
-        Item[] result = new Item[items.size()];
-        int indexResult = 0;
+    public List<Item> findByName(String key) {
+        List<Item> result = new ArrayList<>();
         for (Item item : items) {
             if (item.getName().equals(key)) {
-                result[indexResult++] = item;
+                result.add(item);
             }
         }
-        return Arrays.copyOf(result, indexResult);
+        return result;
     }
 
     /**

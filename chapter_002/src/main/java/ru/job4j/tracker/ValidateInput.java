@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 /**
  * Класс-наследник ConsoleInput,
  * обрабатывает ввод пользователем, не позволяя ввести данные, которых нет в меню.
@@ -20,7 +22,7 @@ public class ValidateInput implements Input {
     }
 
     @Override
-    public int ask(String question, int[] range) {
+    public int ask(String question, List<Integer> range) {
         boolean valid = false;
         int result = -1;
         while (!valid) {

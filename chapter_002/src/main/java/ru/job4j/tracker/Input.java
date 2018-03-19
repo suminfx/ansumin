@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 /**
  * Ввод данных для трекера.
  *
@@ -9,5 +11,5 @@ package ru.job4j.tracker;
 public interface Input {
     String ask(String question);
 
-    int ask(String question, int[] range);
+    int ask(String question, List<Integer> range);
 }
