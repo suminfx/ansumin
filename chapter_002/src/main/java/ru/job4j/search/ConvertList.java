@@ -46,4 +46,21 @@ public class ConvertList {
         }
         return result;
     }
+
+    /**
+     * В этом методе мы проходимся по всем элементам всех
+     * массивов в списке list и добавить их в один общий лист Integer.
+     *
+     * @param list - лист массивов
+     * @return - общий лист целочисленных значений из массивов.
+     */
+    public List<Integer> convert(List<int[]> list) {
+        ArrayList<Integer> result = new ArrayList<>();
+        for (int[] array : list) {
+            for (int i : array) {
+                result.add(i);
+            }
+        }
+        return result;
+    }
 }
