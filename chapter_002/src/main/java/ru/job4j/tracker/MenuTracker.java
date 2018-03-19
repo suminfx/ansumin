@@ -1,5 +1,8 @@
 package ru.job4j.tracker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Реализация меню трекера
  *
@@ -10,26 +13,25 @@ public class MenuTracker {
     private Tracker tracker;
     private Input input;
     private boolean stop = false;
-    private int position = 0;
 
     public MenuTracker(Tracker tracker, Input input) {
         this.tracker = tracker;
         this.input = input;
     }
 
-    UserAction[] actions = new UserAction[7];
+    List<UserAction> actions = new ArrayList<>();
 
     /**
      * Заполняем массив действий пунктов меню.
      */
     public void fillActions() {
-        this.actions[position++] = new AddItem(0, "Add new item");
-        this.actions[position++] = new ShowAllItems(1, "Show all items");
-        this.actions[position++] = new EditItems(2, "Edit item");
-        this.actions[position++] = new DeleteItem(3, "Delete item");
-        this.actions[position++] = new FindById(4, "Find item by id");
-        this.actions[position++] = new FindByName(5, "Find item by name");
-        this.actions[position++] = new Exit(6, "Exit");
+        actions.add(new AddItem(0, "Add new item"));
+        actions.add(new ShowAllItems(1, "Show all items"));
+        actions.add(new EditItems(2, "Edit item"));
+        actions.add(new DeleteItem(3, "Delete item"));
+        actions.add(new FindById(4, "Find item by id"));
+        actions.add(new FindByName(5, "Find item by name"));
+        actions.add(new Exit(6, "Exit"));
     }
 
     /**
