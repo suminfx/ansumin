@@ -42,24 +42,32 @@ public class SimpleArray<T> implements Iterable<T> {
      *
      * @param index - индекс элемента, который нужно заменить.
      * @param model - новый элемент.
+     * @return - успешность выполнения операции.
      */
-    public void set(int index, T model) {
+    public boolean set(int index, T model) {
+        boolean result = false;
         if (index <= this.index) {
             this.array[index] = model;
+            result = true;
         }
+        return result;
     }
 
     /**
      * Удалить элемент из массива.
      *
      * @param index - индекс удаляемого элемента.
+     * @return - успешность выполнения операции.
      */
-    public void delete(int index) {
+    public boolean delete(int index) {
+        boolean result = false;
         if (index <= this.index) {
             System.arraycopy(array, index + 1, array, index, array.length - index - 1);
             array[array.length - 1] = null;
             this.index--;
+            result = true;
         }
+        return result;
     }
 
     /**
