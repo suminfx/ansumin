@@ -32,8 +32,31 @@ public class ManualLinkedList<E> implements ManualList<E> {
         modCount++;
     }
 
-    @Override
-    public E get(int index) {
+    public E remove(int index) {
+        Node<E> node = getNodeByIndex(index);
+        if (isOnlyNode(node)) {
+            node.next = null;
+            node.previous = null;
+        } else if (node == first) {
+            node.next.previous = null;
+            first = node.next;
+        } else if (node == last) {
+            node.previous.next = null;
+            last = node.previous;
+        } else {
+            node.next.previous = node.previous;
+            node.previous.next = node.next;
+        }
+        size--;
+        modCount++;
+        return node.current;
+    }
+
+    private boolean isOnlyNode(Node<E> node) {
+        return node == first && node == last;
+    }
+
+    private Node<E> getNodeByIndex(int index) {
         Node<E> x = first;
         if (index >= 0 && index < this.size) {
             for (int i = 0; i < index; i++) {
@@ -42,7 +65,12 @@ public class ManualLinkedList<E> implements ManualList<E> {
         } else {
             throw new IndexOutOfBoundsException();
         }
-        return x.current;
+        return x;
+    }
+
+    @Override
+    public E get(int index) {
+        return getNodeByIndex(index).current;
     }
 
     @Override

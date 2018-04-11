@@ -1,4 +1,4 @@
-package ru.job4j.generics;
+package ru.job4j.container;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,5 +57,18 @@ public class ManualLinkedListTest {
         for (int i : list) {
             list.add(6);
         }
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testRemoveElementOutOfBounds() {
+        list.remove(99);
+        list.get(99);
+    }
+
+    @Test
+    public void testRemoveElement() {
+        assertThat(list.get(6), is(6));
+        list.remove(5);
+        assertThat(list.get(6), is(7));
     }
 }
