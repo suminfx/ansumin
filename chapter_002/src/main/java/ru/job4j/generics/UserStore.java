@@ -7,7 +7,4 @@ package ru.job4j.generics;
  * @since 08.04.2018
  */
 public class UserStore extends AbstractStore<User> {
-    public UserStore() {
-        super(new SimpleArray<>());
-    }
 }
