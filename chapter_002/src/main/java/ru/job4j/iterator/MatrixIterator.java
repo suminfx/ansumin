@@ -26,7 +26,12 @@ public class MatrixIterator implements Iterator<Integer> {
     @Override
     public Integer next() {
         if (this.hasNext()) {
-            return colsIndex < values[rowsIndex].length - 1 ? values[rowsIndex][++colsIndex] : values[++rowsIndex][colsIndex = 0];
+            if (colsIndex < values[rowsIndex].length - 1) {
+                return values[rowsIndex][++colsIndex];
+            } else {
+                colsIndex = 0;
+                return values[++rowsIndex][colsIndex];
+            }
         } else {
             throw new NoSuchElementException();
         }
