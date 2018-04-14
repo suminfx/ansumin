@@ -23,23 +23,25 @@ public class Node<T> {
      * @return - имеются ли зацикленности в списке.
      */
     public static boolean hasCycle(Node first) {
-        boolean result = false;
-        Node nextNode = first;
-        int index = 0;
-        while ((nextNode = nextNode.next) != null) {
-            index++;
-            Node current = first;
-            for (int i = 0; i < index; i++) {
-                if (current.value == nextNode.value) {
-                    result = true;
-                    break;
-                }
-                current = current.next;
+        if (first == null) {
+            return false;
+        }
+        Node slow, fast;
+        slow = first;
+        fast = first;
+        while (true) {
+            slow = slow.next;
+            if (fast.next != null) {
+                fast = fast.next.next;
+            } else {
+                return false;
             }
-            if (result) {
-                break;
+            if (slow == null || fast == null) {
+                return false;
+            }
+            if (slow == fast) {
+                return true;
             }
         }
-        return result;
     }
 }
