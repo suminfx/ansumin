@@ -82,7 +82,7 @@ public class ManualLinkedList<E> implements ManualList<E> {
             @Override
             public boolean hasNext() {
                 if (current == modCount) {
-                    return node.next != null;
+                    return node != null && node.next != null;
                 } else {
                     throw new ConcurrentModificationException();
                 }
