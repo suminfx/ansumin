@@ -26,22 +26,18 @@ public class Node<T> {
         if (first == null) {
             return false;
         }
+        boolean result = false;
         Node slow, fast;
         slow = first;
         fast = first;
-        while (true) {
+        while (fast != null) {
             slow = slow.next;
-            if (fast.next != null) {
-                fast = fast.next.next;
-            } else {
-                return false;
-            }
-            if (slow == null || fast == null) {
-                return false;
-            }
-            if (slow == fast) {
-                return true;
+            fast = fast.next.next;
+            if (slow == fast && fast != null) {
+                result = true;
+                break;
             }
         }
+        return result;
     }
 }
