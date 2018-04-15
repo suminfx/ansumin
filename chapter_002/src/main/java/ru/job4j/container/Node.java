@@ -30,12 +30,11 @@ public class Node<T> {
         Node slow, fast;
         slow = first;
         fast = first;
-        while (fast != null) {
+        while (!result && fast != null) {
             slow = slow.next;
             fast = fast.next.next;
             if (slow == fast && fast != null) {
                 result = true;
-                break;
             }
         }
         return result;
