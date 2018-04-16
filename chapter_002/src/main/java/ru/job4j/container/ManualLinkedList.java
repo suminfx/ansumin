@@ -20,13 +20,13 @@ public class ManualLinkedList<E> implements ManualList<E> {
 
     @Override
     public void add(E value) {
-        Node<E> l = last;
-        Node<E> newNode = new Node(l, value, null);
-        last = newNode;
-        if (l == null) {
+        Node<E> preLast = this.last;
+        Node<E> newNode = new Node(preLast, value, null);
+        this.last = newNode;
+        if (preLast == null) {
             first = newNode;
         } else {
-            l.next = last;
+            preLast.next = this.last;
         }
         size++;
         modCount++;
@@ -34,7 +34,7 @@ public class ManualLinkedList<E> implements ManualList<E> {
 
     public E remove(int index) {
         Node<E> node = getNodeByIndex(index);
-        if (isOnlyNode(node)) {
+        if (isOnlyNode()) {
             node.next = null;
             node.previous = null;
         } else if (node == first) {
@@ -52,20 +52,19 @@ public class ManualLinkedList<E> implements ManualList<E> {
         return node.current;
     }
 
-    private boolean isOnlyNode(Node<E> node) {
-        return node == first && node == last;
+    private boolean isOnlyNode() {
+        return this.size == 1;
     }
 
     private Node<E> getNodeByIndex(int index) {
-        Node<E> x = first;
-        if (index >= 0 && index < this.size) {
-            for (int i = 0; i < index; i++) {
-                x = x.next;
-            }
-        } else {
+        Node<E> node = first;
+        if (index < 0 || index >= this.size) {
             throw new IndexOutOfBoundsException();
         }
-        return x;
+        for (int i = 0; i < index; i++) {
+            node = node.next;
+        }
+        return node;
     }
 
     @Override
@@ -81,22 +80,20 @@ public class ManualLinkedList<E> implements ManualList<E> {
 
             @Override
             public boolean hasNext() {
-                if (current == modCount) {
-                    return node != null && node.next != null;
-                } else {
+                if (current != modCount) {
                     throw new ConcurrentModificationException();
                 }
+                return node != null && node.next != null;
             }
 
             @Override
             public E next() {
-                if (hasNext()) {
-                    E result = node.current;
-                    node = node.next;
-                    return result;
-                } else {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
+                E result = node.current;
+                node = node.next;
+                return result;
             }
         };
     }
