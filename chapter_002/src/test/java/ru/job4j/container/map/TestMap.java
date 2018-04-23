@@ -25,6 +25,6 @@ public class TestMap {
     @Test
     public void sizeOfMapMustBeTwo() {
         System.out.println(users);
-        assertThat(users.size(), is(2));
+        assertThat(users.size(), is(1));
     }
 }
