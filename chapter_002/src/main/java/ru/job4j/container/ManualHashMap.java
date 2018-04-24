@@ -87,7 +87,7 @@ public class ManualHashMap<K, V> implements Iterable<K> {
         Node<K, V>[] newArray = (Node<K, V>[]) new Node[fullSizeOfArray];
         for (Node node : nodes) {
             if (node != null) {
-                newArray[hash((K)(node.key))] = node;
+                newArray[hash((K) (node.key))] = node;
             }
         }
         this.nodes = newArray;
