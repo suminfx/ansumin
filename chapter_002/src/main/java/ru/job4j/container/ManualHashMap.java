@@ -34,7 +34,7 @@ public class ManualHashMap<K, V> implements Iterable<K> {
         if (key == null || value == null || containsKey(key)) {
             return false;
         }
-        if (size >= DEFAULT_SIZE * LOAD_FACTOR) {
+        if (size >= fullSizeOfArray * LOAD_FACTOR) {
             increaseArray();
         }
         nodes[hash(key)] = new Node<>(key, value);
