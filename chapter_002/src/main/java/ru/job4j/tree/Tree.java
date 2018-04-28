@@ -47,6 +47,27 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         return result;
     }
 
+    /**
+     * Метод проверяет является ли дерево двоичным.
+     * Т.е. количество детей у каждого родителя должно быть меньше или равно 2.
+     *
+     * @return - Является ли дерево двоичным?
+     */
+    public boolean isBinary() {
+        Queue<Node<E>> data = new LinkedList<>();
+        data.offer(this.root);
+        while (!data.isEmpty()) {
+            Node<E> el = data.poll();
+            if (el.leaves().size() > 2) {
+                return false;
+            }
+            for (Node<E> node : el.leaves()) {
+                data.offer(node);
+            }
+        }
+        return true;
+    }
+
     @Override
     public Iterator<E> iterator() {
         Queue<Node<E>> data = new LinkedList<>();
