@@ -11,8 +11,9 @@ import java.util.Set;
  * @since 10.05.2018
  */
 public class WordIndex {
-    private String[] text;
+    private String text;
     private TreeWord treeWord = new TreeWord();
+    private boolean wasReading = false;
 
     /**
      * Загрузить текст из файла, разбить его на слова и заполнить префиксное дерево значениями из этого текста.
@@ -28,13 +29,18 @@ public class WordIndex {
             while ((line = reader.readLine()) != null) {
                 content.append(line).append(separator);
             }
-            text = content.toString().split(" ");
-            for (String s : text) {
-                treeWord.add(s);
-            }
+            text = content.toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void reading() {
+        String[] words = text.split(" ");
+        for (String s : words) {
+            treeWord.add(s);
+        }
+        wasReading = true;
     }
 
     /**
@@ -45,6 +51,9 @@ public class WordIndex {
      * Ищет только слово целиком.
      */
     public Set<Integer> getIndexes4Word(String searchWord) {
+        if (!wasReading) {
+            reading();
+        }
         return treeWord.getPositions(searchWord);
     }
 }
