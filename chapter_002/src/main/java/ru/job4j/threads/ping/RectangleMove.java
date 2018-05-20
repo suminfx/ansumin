@@ -13,7 +13,7 @@ public class RectangleMove implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (!Thread.interrupted()) {
             if (this.rect.getX() >= 290 || this.rect.getX() <= 0) {
                 hSpeed *= -1;
             }

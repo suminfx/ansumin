@@ -1,4 +1,4 @@
-package ru.job4j.threads.ping.issues;
+package ru.job4j.threads.issues;
 
 /**
  * Класс в котором демонстрируются проблемы многопоточности,
