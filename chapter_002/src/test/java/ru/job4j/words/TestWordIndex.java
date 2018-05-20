@@ -14,7 +14,7 @@ public class TestWordIndex {
 
     @Before
     public void loadText() {
-        wordIndex.loadFile("src\\main\\java\\ru\\job4j\\words\\testText.txt");
+        wordIndex.loadFile("src\\\\main\\\\java\\\\ru\\\\job4j\\\\words\\\\testText.txt");
     }
 
     @Test
