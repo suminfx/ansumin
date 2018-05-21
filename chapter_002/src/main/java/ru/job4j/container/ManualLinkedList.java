@@ -1,5 +1,8 @@
 package ru.job4j.container;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -12,14 +15,17 @@ import java.util.NoSuchElementException;
  * @author Andrey Sumin
  * @since 10.04.2018
  */
+@ThreadSafe
 public class ManualLinkedList<E> implements ManualList<E> {
     private int size = 0;
     private int modCount = 0;
+    @GuardedBy("this")
     private Node<E> first = null;
+    @GuardedBy("this")
     private Node<E> last = null;
 
     @Override
-    public void add(E value) {
+    public synchronized void add(E value) {
         Node<E> preLast = this.last;
         Node<E> newNode = new Node(preLast, value, null);
         this.last = newNode;
@@ -32,7 +38,7 @@ public class ManualLinkedList<E> implements ManualList<E> {
         modCount++;
     }
 
-    public E remove(int index) {
+    public synchronized E remove(int index) {
         Node<E> node = getNodeByIndex(index);
         if (isOnlyNode()) {
             node.next = null;
@@ -52,11 +58,11 @@ public class ManualLinkedList<E> implements ManualList<E> {
         return node.current;
     }
 
-    private boolean isOnlyNode() {
+    private synchronized boolean isOnlyNode() {
         return this.size == 1;
     }
 
-    private Node<E> getNodeByIndex(int index) {
+    private synchronized Node<E> getNodeByIndex(int index) {
         Node<E> node = first;
         if (index < 0 || index >= this.size) {
             throw new IndexOutOfBoundsException();
@@ -73,9 +79,9 @@ public class ManualLinkedList<E> implements ManualList<E> {
     }
 
     @Override
-    public Iterator<E> iterator() {
-        return new Iterator<E>() {
-            int current = modCount;
+    public synchronized Iterator<E> iterator() {
+        return new Iterator<>() {
+            final int current = modCount;
             Node<E> node = first;
 
             @Override
@@ -105,10 +111,10 @@ public class ManualLinkedList<E> implements ManualList<E> {
      */
     private class Node<T> {
         Node<T> previous;
-        T current;
+        final T current;
         Node<T> next;
 
-        public Node(Node<T> previous, T current, Node<T> next) {
+        private Node(Node<T> previous, T current, Node<T> next) {
             this.previous = previous;
             this.current = current;
             this.next = next;

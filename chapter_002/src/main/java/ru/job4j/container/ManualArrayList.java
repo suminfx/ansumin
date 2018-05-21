@@ -1,5 +1,8 @@
 package ru.job4j.container;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -12,7 +15,9 @@ import java.util.NoSuchElementException;
  * @author Andrey Sumin
  * @since 08.04.2018
  */
+@ThreadSafe
 public class ManualArrayList<E> implements ManualList<E> {
+    @GuardedBy("this")
     private E[] array;
     private int index = 0;
     private int modCount = 0;
@@ -23,7 +28,7 @@ public class ManualArrayList<E> implements ManualList<E> {
     }
 
     @Override
-    public void add(E value) {
+    public synchronized void add(E value) {
         if (value != null) {
             modCount++;
             if (index < array.length) {
@@ -36,7 +41,7 @@ public class ManualArrayList<E> implements ManualList<E> {
     }
 
     @Override
-    public E get(int index) {
+    public synchronized E get(int index) {
         E result = null;
         if (index >= 0 && index < this.index) {
             result = array[index];
@@ -46,14 +51,14 @@ public class ManualArrayList<E> implements ManualList<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new Iterator<E>() {
-            int expectedModCount = modCount;
+        return new Iterator<>() {
+            final int expectedModCount = modCount;
             int current = 0;
 
             @Override
             public boolean hasNext() {
                 if (expectedModCount == modCount) {
-                    return array[current] != null;
+                    return get(current) != null;
                 } else {
                     throw new ConcurrentModificationException();
                 }
@@ -62,7 +67,7 @@ public class ManualArrayList<E> implements ManualList<E> {
             @Override
             public E next() {
                 if (hasNext()) {
-                    return array[current++];
+                    return get(current++);
                 } else {
                     throw new NoSuchElementException();
                 }
