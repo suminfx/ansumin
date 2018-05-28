@@ -5,6 +5,7 @@ import net.jcip.annotations.ThreadSafe;
 
 @ThreadSafe
 public class User {
+    @GuardedBy("this")
     private final int id;
 
     @GuardedBy("this")
@@ -19,7 +20,7 @@ public class User {
         this.amount = amount;
     }
 
-    public int getId() {
+    public synchronized int getId() {
         return id;
     }
 
@@ -32,7 +33,7 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public synchronized boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -46,7 +47,7 @@ public class User {
     }
 
     @Override
-    public int hashCode() {
+    public synchronized int hashCode() {
         return id;
     }
 }
