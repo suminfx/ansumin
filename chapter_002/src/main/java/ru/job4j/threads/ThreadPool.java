@@ -5,9 +5,10 @@ import java.util.Queue;
 
 class ThreadPool {
     private Queue<Work> queueOfWork;
-    private static Work[] workingProcesses = new Work[3];
+    private Work[] workingProcesses = new Work[3];
     private boolean isShutDown = false;
     private boolean wasStart = false;
+    private boolean search = false;
 
     ThreadPool() {
         this.queueOfWork = new LinkedList<>();
@@ -15,16 +16,13 @@ class ThreadPool {
 
     void add(Work work) {
         queueOfWork.offer(work);
-        if (!wasStart) {
-            wasStart = true;
-            Thread start = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    startWork(workingProcesses);
-                }
-            });
-            start.setDaemon(false);
-            start.start();
+        synchronized (this) {
+            notifyAll();
+        }
+        try {
+            startWork();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -32,16 +30,22 @@ class ThreadPool {
         this.isShutDown = true;
     }
 
-    private void startWork(Work[] workingProcesses) {
-        while (!isShutDown) {
-            if (!queueOfWork.isEmpty()) {
+    private void startWork() throws InterruptedException {
+        synchronized (this) {
+            while (!isShutDown) {
+                while (queueOfWork.isEmpty()) {
+                    wait();
+                }
+                search = true;
                 for (int i = 0; i < workingProcesses.length; i++) {
                     if (workingProcesses[i] == null || !workingProcesses[i].isAlive()) {
                         workingProcesses[i] = queueOfWork.poll();
                         workingProcesses[i].start();
+                        search = false;
                         break;
                     }
                 }
+                notifyAll();
             }
         }
     }
