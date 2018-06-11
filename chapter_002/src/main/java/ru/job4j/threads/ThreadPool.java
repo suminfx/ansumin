@@ -1,52 +1,43 @@
 package ru.job4j.threads;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
+@ThreadSafe
 class ThreadPool {
-    private Queue<Work> queueOfWork;
-    private Work[] workingProcesses = new Work[3];
-    private boolean isShutDown = false;
-    private boolean wasStart = false;
-    private boolean search = false;
+    @GuardedBy("this")
+    private BlockingQueue<Runnable> taskQueue = null;
+    @GuardedBy("this")
+    private final List<PoolThread> threads = new ArrayList<>();
+    private boolean isStopped = false;
 
-    ThreadPool() {
-        this.queueOfWork = new LinkedList<>();
-    }
-
-    void add(Work work) {
-        queueOfWork.offer(work);
-        synchronized (this) {
-            notifyAll();
+    public ThreadPool() {
+        int size = Runtime.getRuntime().availableProcessors();
+        taskQueue = new LinkedBlockingQueue(size);
+        for (int i = 0; i < size; i++) {
+            threads.add(new PoolThread(taskQueue));
         }
-        try {
-            startWork();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        for (PoolThread thread : threads) {
+            thread.start();
         }
     }
 
-    void shutDown() {
-        this.isShutDown = true;
+    public synchronized void execute(Runnable task) throws Exception {
+        if (this.isStopped) {
+            throw new IllegalStateException("ThreadPool is stopped");
+        }
+        this.taskQueue.put(task);
     }
 
-    private void startWork() throws InterruptedException {
-        synchronized (this) {
-            while (!isShutDown) {
-                while (queueOfWork.isEmpty()) {
-                    wait();
-                }
-                search = true;
-                for (int i = 0; i < workingProcesses.length; i++) {
-                    if (workingProcesses[i] == null || !workingProcesses[i].isAlive()) {
-                        workingProcesses[i] = queueOfWork.poll();
-                        workingProcesses[i].start();
-                        search = false;
-                        break;
-                    }
-                }
-                notifyAll();
-            }
+    public synchronized void stop() {
+        this.isStopped = true;
+        for (PoolThread thread : threads) {
+            thread.doStop();
         }
     }
 }

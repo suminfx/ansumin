@@ -15,16 +15,20 @@ public class ThreadPoolTest {
     @Test
     public void inOneMomentShouldNotUsingMoreThanSixThreads() {
         for (int i = 0; i < 20; i++) {
-            pool.add(new Work(new Thread(() -> {
-                int current = count++;
-                System.out.println(current + " начал выполнение...");
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(current + " завершил выполнение.");
-            })));
+            try {
+                pool.execute(() -> {
+                    int current = count++;
+                    System.out.println(current + " начал выполнение...");
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(current + " завершил выполнение.");
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
