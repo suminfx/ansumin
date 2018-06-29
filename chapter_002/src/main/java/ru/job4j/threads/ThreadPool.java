@@ -10,15 +10,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 @ThreadSafe
 class ThreadPool {
-    @GuardedBy("this")
-    private BlockingQueue<Runnable> taskQueue = null;
-    @GuardedBy("this")
+    private final BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue(Runtime.getRuntime().availableProcessors());
     private final List<PoolThread> threads = new ArrayList<>();
     private boolean isStopped = false;
 
     public ThreadPool() {
         int size = Runtime.getRuntime().availableProcessors();
-        taskQueue = new LinkedBlockingQueue(size);
         for (int i = 0; i < size; i++) {
             threads.add(new PoolThread(taskQueue));
         }
@@ -27,14 +24,14 @@ class ThreadPool {
         }
     }
 
-    public synchronized void execute(Runnable task) throws Exception {
+    public void execute(Runnable task) throws Exception {
         if (this.isStopped) {
             throw new IllegalStateException("ThreadPool is stopped");
         }
         this.taskQueue.put(task);
     }
 
-    public synchronized void stop() {
+    public void stop() {
         this.isStopped = true;
         for (PoolThread thread : threads) {
             thread.doStop();
